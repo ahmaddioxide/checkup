@@ -1,5 +1,4 @@
 import 'package:checkup/consts/assets.dart';
-import 'package:checkup/pages/login/components/remember_me.dart';
 import 'package:checkup/pages/login/login_screen.dart';
 import 'package:checkup/pages/widgets/custom_button.dart';
 import 'package:checkup/pages/widgets/custom_image_appbar.dart';
@@ -40,7 +39,6 @@ class SignupScreen extends StatelessWidget {
                             width: 100.h,
                             height: 100.h,
                           ),
-                          SizedBox(height: 12.h),
                           Row(
                             children: [
                               Text(
