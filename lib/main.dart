@@ -1,5 +1,8 @@
+import 'package:checkup/firebase_options.dart';
 import 'package:checkup/src/theme/theming.dart';
+import 'package:checkup/utils/logger.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +10,22 @@ import 'package:get/get.dart';
 
 import 'pages/bottom_navigation_screen/bottom_navigation_screen.dart';
 
-void main() {
+Future<void> intiServices() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ).onError((error, stackTrace) {
+    myLog.e('Firebase initialization failed',
+        error: error, stackTrace: stackTrace);
+    return Future.error('Firebase initialization failed');
+  }).then((value) {
+    myLog.i('Firebase initialized');
+  });
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await intiServices();
+
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
@@ -21,12 +39,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Set the fit size (Find your UI design, look at the dimensions of the device screen and fill it in,unit in dp)
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return GetMaterialApp(
           locale: DevicePreview.locale(context),
