@@ -63,23 +63,32 @@ class EditProfileScreen extends StatelessWidget {
                       //client image and edit button
                       Stack(
                         children: [
-                          Container(
-                              height: 100.h,
-                              width: 100.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.tertiary,
-                                  width: 0,
+                          Obx(() {
+                            if (editProfileController.imageUrl.value.isEmpty) {
+                              return CircleAvatar(
+                                radius: 50.r,
+                                backgroundColor: AppColors.grey,
+                                child: const Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 50,
                                 ),
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl: user.imageUrl,
+                              );
+                            } else {
+                              return CachedNetworkImage(
+                                imageUrl: editProfileController.imageUrl.value,
+                                imageBuilder: (context, imageProvider) =>
+                                    CircleAvatar(
+                                  radius: 50.r,
+                                  backgroundImage: imageProvider,
+                                ),
                                 placeholder: (context, url) =>
-                                    const Icon(Icons.person, size: 100),
+                                    const CircularProgressIndicator(),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
-                              )),
+                              );
+                            }
+                          }),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -91,7 +100,9 @@ class EditProfileScreen extends StatelessWidget {
                                   Icons.camera_alt_outlined,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  editProfileController.updateImage();
+                                },
                               ),
                             ),
                           ),
@@ -227,6 +238,27 @@ class EditProfileScreen extends StatelessWidget {
                                       editProfileController.imageUrl.value,
                                 );
                                 myLog.i(newUser.toString());
+
+                                // Update the user data
+                                editProfileController
+                                    .updateUserData(newUser)
+                                    .then((value) {
+                                  if (value) {
+                                    Get.snackbar(
+                                      'Success',
+                                      'Profile updated successfully',
+                                      backgroundColor: AppColors.primary,
+                                      colorText: AppColors.white,
+                                    );
+                                  } else {
+                                    Get.snackbar(
+                                      'Error',
+                                      'An error occurred',
+                                      backgroundColor: AppColors.tertiary,
+                                      colorText: AppColors.white,
+                                    );
+                                  }
+                                });
                               }
                             },
                           )

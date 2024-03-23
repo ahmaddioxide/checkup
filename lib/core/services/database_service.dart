@@ -39,4 +39,22 @@ class DatabaseService {
       return Future.error(e);
     }
   }
+
+  Future<void> updateUserData(UserModel user, String userId) async {
+    try {
+      return await _usersCollection.doc(userId).update(user.toMap());
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<void> updateUserImageUrl(String imageUrl) async {
+    try {
+      await _usersCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({'imageUrl': imageUrl});
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }
