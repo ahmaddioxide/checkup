@@ -3,14 +3,11 @@ import 'package:checkup/pages/home_screen/widgets/articles_card.dart';
 import 'package:checkup/pages/home_screen/widgets/upcoming_booking_card.dart';
 import 'package:checkup/pages/widgets/custom_button.dart';
 import 'package:checkup/src/theme/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

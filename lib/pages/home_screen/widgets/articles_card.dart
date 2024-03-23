@@ -1,6 +1,5 @@
 import 'package:checkup/consts/assets.dart';
 import 'package:checkup/src/theme/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,7 +54,9 @@ class ArticleCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                 ),
-                SizedBox(width: 165.w,),
+                SizedBox(
+                  width: 165.w,
+                ),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(
@@ -93,13 +94,13 @@ class ArticleCard extends StatelessWidget {
                             Icons.arrow_forward,
                             color: AppColors.white,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

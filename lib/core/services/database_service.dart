@@ -69,7 +69,6 @@ class DatabaseService {
     }
   }
 
-
   Future<List<FamilyMemberModel>> getFamilyMembers(String userId) async {
     final List<FamilyMemberModel> familyMembers = [];
     try {
@@ -81,6 +80,32 @@ class DatabaseService {
       return familyMembers;
     } on Exception catch (e) {
       return Future.error(e);
+    }
+  }
+
+  Stream<List<FamilyMemberModel>> getStreamOfFamilyMembers(String userId) {
+    try {
+      return _usersCollection
+          .doc(userId)
+          .collection('familyMembers')
+          .snapshots()
+          .map((snapshot) {
+        return snapshot.docs
+            .map((doc) => FamilyMemberModel.fromDocumentSnapshot(doc))
+            .toList();
+      });
+    } on Exception catch (e) {
+      return Stream.error(e);
+    }
+  }
+
+  Stream<UserModel> getStreamOfUserProfile(String uid) {
+    try {
+      return _usersCollection.doc(uid).snapshots().map((snapshot) {
+        return UserModel.fromDocumentSnapshot(snapshot);
+      });
+    } on Exception catch (e) {
+      return Stream.error(e);
     }
   }
 }
