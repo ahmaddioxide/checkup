@@ -1,5 +1,5 @@
-//get named routes with GetPage and bind controllers
-
+import 'package:checkup/pages/add_family_member/add_family_member_controller.dart';
+import 'package:checkup/pages/add_family_member/add_family_member_screen.dart';
 import 'package:checkup/pages/bottom_navigation_screen/bottom_navigation_screen.dart';
 import 'package:checkup/pages/edit_profile/edit_profile_controller.dart';
 import 'package:checkup/pages/edit_profile/edit_profile_screen.dart';
@@ -31,6 +31,13 @@ class AppRoutes {
       page: () => const EditProfileScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => EditProfileController());
+      }),
+    ),
+    GetPage(
+      name: '/add_family_member',
+      page: () => const AddFamilyMemberScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => AddFamilyMemberController());
       }),
     ),
   ];

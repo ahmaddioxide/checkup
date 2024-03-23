@@ -9,6 +9,7 @@ class AppColors {
   static const Color quaternary = Color(0xFF86022E); //dark redish
   static const Color grey = Color(0xFF0D0D0D); //blackish
   static const Color white = Color(0xFFFFFFFF); //white
+  static const Color background = Color(0xFF85022f); //black
 }
 
 //Primary Color Swatch

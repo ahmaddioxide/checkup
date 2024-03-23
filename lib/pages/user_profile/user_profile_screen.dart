@@ -15,11 +15,18 @@ class UserProfileScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
           ElevatedButton(
-              onPressed: () {
-                AuthService().signOut();
-                Get.offAllNamed('/login');
-              },
-              child: const Text('Logout'),),
+            onPressed: () {
+              Get.toNamed('/add_family_member');
+            },
+            child: const Text('Add Family Member'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              AuthService().signOut();
+              Get.offAllNamed('/login');
+            },
+            child: const Text('Logout'),
+          ),
           Center(
             child: ElevatedButton(
               onPressed: () {

@@ -6,7 +6,6 @@ import 'package:checkup/pages/widgets/custom_text_fields_with_title.dart';
 import 'package:checkup/src/theme/app_colors.dart';
 import 'package:checkup/utils/logger.dart';
 import 'package:checkup/utils/validators.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -94,10 +93,10 @@ class EditProfileScreen extends StatelessWidget {
                             right: 0,
                             child: CircleAvatar(
                               radius: 18.r,
-                              backgroundColor: AppColors.grey,
+                              backgroundColor: AppColors.primary,
                               child: IconButton(
                                 icon: const Icon(
-                                  Icons.camera_alt_outlined,
+                                  Icons.edit,
                                   color: Colors.white,
                                 ),
                                 onPressed: () {
@@ -191,7 +190,7 @@ class EditProfileScreen extends StatelessWidget {
                                                   color: AppColors.primary,
                                                 )
                                               : const TextStyle(
-                                                  color: AppColors.grey),
+                                                  color: AppColors.grey,),
                                     ),
                                     value: 'male',
                                     groupValue:
@@ -212,7 +211,7 @@ class EditProfileScreen extends StatelessWidget {
                                                   color: AppColors.primary,
                                                 )
                                               : const TextStyle(
-                                                  color: AppColors.grey),
+                                                  color: AppColors.grey,),
                                     ),
                                     value: 'female',
                                     groupValue:
@@ -261,7 +260,7 @@ class EditProfileScreen extends StatelessWidget {
                                 });
                               }
                             },
-                          )
+                          ),
                         ],
                       ),
                     ],

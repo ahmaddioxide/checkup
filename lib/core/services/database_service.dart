@@ -1,5 +1,5 @@
+import 'package:checkup/core/data/models/family_member_model.dart';
 import 'package:checkup/core/data/models/user_model.dart';
-import 'package:checkup/core/services/auth_service.dart';
 import 'package:checkup/utils/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,6 +54,32 @@ class DatabaseService {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'imageUrl': imageUrl});
     } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<void> addFamilyMember(Map<String, dynamic> data) async {
+    try {
+      await _usersCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('familyMembers')
+          .add(data);
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+
+  Future<List<FamilyMemberModel>> getFamilyMembers(String userId) async {
+    final List<FamilyMemberModel> familyMembers = [];
+    try {
+      final QuerySnapshot snapshot =
+          await _usersCollection.doc(userId).collection('familyMembers').get();
+      for (var doc in snapshot.docs) {
+        familyMembers.add(FamilyMemberModel.fromDocumentSnapshot(doc));
+      }
+      return familyMembers;
+    } on Exception catch (e) {
       return Future.error(e);
     }
   }
