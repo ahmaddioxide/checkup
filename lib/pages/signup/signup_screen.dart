@@ -1,5 +1,6 @@
 import 'package:checkup/consts/assets.dart';
-import 'package:checkup/pages/login/login_screen.dart';
+import 'package:checkup/core/data/models/user_model.dart';
+import 'package:checkup/pages/signup/signup_controller.dart';
 import 'package:checkup/pages/widgets/custom_button.dart';
 import 'package:checkup/pages/widgets/custom_image_appbar.dart';
 import 'package:checkup/pages/widgets/custom_text_fields_with_title.dart';
@@ -14,7 +15,19 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SignupController signupController = Get.find<SignupController>();
+
+    //
+    final TextEditingController firstNameController = TextEditingController();
+    final TextEditingController lastNameController = TextEditingController();
+    final TextEditingController phoneNumberController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController =
+        TextEditingController();
+
     final formKey = GlobalKey<FormState>();
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -57,7 +70,7 @@ class SignupScreen extends StatelessWidget {
                           TextFieldWithTitle(
                             title: 'First Name',
                             hintText: 'Enter your first name',
-                            controller: TextEditingController(),
+                            controller: firstNameController,
                             keyboardType: TextInputType.name,
                             validator: isName,
                           ),
@@ -65,7 +78,7 @@ class SignupScreen extends StatelessWidget {
                           TextFieldWithTitle(
                             title: 'Last Name',
                             hintText: 'Enter your last name',
-                            controller: TextEditingController(),
+                            controller: lastNameController,
                             keyboardType: TextInputType.name,
                             validator: isName,
                           ),
@@ -73,7 +86,7 @@ class SignupScreen extends StatelessWidget {
                           TextFieldWithTitle(
                             title: 'Email',
                             hintText: 'Enter your email',
-                            controller: TextEditingController(),
+                            controller: emailController,
                             keyboardType: TextInputType.emailAddress,
                             validator: isEmail,
                           ),
@@ -82,7 +95,7 @@ class SignupScreen extends StatelessWidget {
                           TextFieldWithTitle(
                             title: 'Phone Number',
                             hintText: '08012345678',
-                            controller: TextEditingController(),
+                            controller: phoneNumberController,
                             keyboardType: TextInputType.phone,
                             validator: isPhoneNumber,
                           ),
@@ -91,18 +104,21 @@ class SignupScreen extends StatelessWidget {
                           TextFieldWithTitle(
                             title: 'Password',
                             hintText: 'Enter your password',
-                            controller: TextEditingController(),
+                            controller: passwordController,
                             keyboardType: TextInputType.visiblePassword,
                             validator: isPassword,
+                            isObscure: true,
                           ),
                           SizedBox(height: 12.h),
 
                           TextFieldWithTitle(
                             title: 'Confirm Password',
                             hintText: 'Enter your password',
-                            controller: TextEditingController(),
+                            controller: confirmPasswordController,
                             keyboardType: TextInputType.visiblePassword,
-                            validator: isPassword,
+                            validator: (value) =>
+                                confirmPassword(value, passwordController.text),
+                            isObscure: true,
                           ),
                           SizedBox(height: 12.h),
                           SizedBox(height: 12.h),
@@ -112,6 +128,15 @@ class SignupScreen extends StatelessWidget {
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
                                   debugPrint('Create Account');
+                                  signupController.onSignupPressed(
+                                    user: UserModel(
+                                      fullName:
+                                          '${firstNameController.text} ${lastNameController.text}',
+                                      email: emailController.text,
+                                      phoneNumber: phoneNumberController.text,
+                                      password: passwordController.text,
+                                    ),
+                                  );
                                 }
                               },
                             ),
@@ -133,7 +158,7 @@ class SignupScreen extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             debugPrint('Sign Up');
-                            Get.offAll(() => const LoginScreen());
+                            Get.offAllNamed('/login');
                           },
                           child: Text(
                             'Login',

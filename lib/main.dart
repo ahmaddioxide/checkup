@@ -1,4 +1,6 @@
+import 'package:checkup/core/services/auth_service.dart';
 import 'package:checkup/firebase_options.dart';
+import 'package:checkup/src/routes/app_routes.dart';
 import 'package:checkup/src/theme/theming.dart';
 import 'package:checkup/utils/logger.dart';
 import 'package:device_preview/device_preview.dart';
@@ -15,7 +17,7 @@ Future<void> intiServices() async {
     options: DefaultFirebaseOptions.currentPlatform,
   ).onError((error, stackTrace) {
     myLog.e('Firebase initialization failed',
-        error: error, stackTrace: stackTrace);
+        error: error, stackTrace: stackTrace,);
     return Future.error('Firebase initialization failed');
   }).then((value) {
     myLog.i('Firebase initialized');
@@ -45,6 +47,10 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return GetMaterialApp(
+          getPages: AppRoutes.routes,
+          // named routes for the app
+          initialRoute: AuthService.currentUser != null ? '/' : '/login',
+          // default route for the app
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
           debugShowCheckedModeBanner: false,

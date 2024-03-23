@@ -9,6 +9,8 @@ class TextFieldWithTitle extends StatelessWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final String title;
+  final bool isObscure;
+  final bool isDisabled;
 
   const TextFieldWithTitle({
     super.key,
@@ -17,6 +19,8 @@ class TextFieldWithTitle extends StatelessWidget {
     required this.keyboardType,
     required this.validator,
     required this.title,
+    this.isObscure = false,
+    this.isDisabled = false,
   });
 
   @override
@@ -37,6 +41,8 @@ class TextFieldWithTitle extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           validator: validator,
+          isObscure: isObscure,
+          isDisabled: isDisabled,
         ),
       ],
     );

@@ -1,6 +1,6 @@
 import 'package:checkup/consts/assets.dart';
 import 'package:checkup/pages/login/components/remember_me.dart';
-import 'package:checkup/pages/signup/signup_screen.dart';
+import 'package:checkup/pages/login/login_controller.dart';
 import 'package:checkup/pages/widgets/custom_button.dart';
 import 'package:checkup/pages/widgets/custom_image_appbar.dart';
 import 'package:checkup/pages/widgets/custom_text_fields_with_title.dart';
@@ -8,13 +8,18 @@ import 'package:checkup/src/theme/app_colors.dart';
 import 'package:checkup/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LoginController loginController = Get.find<LoginController>();
+
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       body: Column(
@@ -58,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                           TextFieldWithTitle(
                             title: 'Email',
                             hintText: 'Enter your email',
-                            controller: TextEditingController(),
+                            controller: emailController,
                             keyboardType: TextInputType.emailAddress,
                             validator: isEmail,
                           ),
@@ -66,9 +71,10 @@ class LoginScreen extends StatelessWidget {
                           TextFieldWithTitle(
                             title: 'Password',
                             hintText: 'Enter your password',
-                            controller: TextEditingController(),
+                            controller: passwordController,
                             keyboardType: TextInputType.visiblePassword,
                             validator: isPassword,
+                            isObscure: true,
                           ),
                           SizedBox(height: 12.h),
                           RememberMeRow(
@@ -87,6 +93,12 @@ class LoginScreen extends StatelessWidget {
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
                                   debugPrint('Login');
+
+                                  loginController.onLoginPressed(
+                                    email: emailController
+                                        .text.removeAllWhitespace,
+                                    password: passwordController.text,
+                                  );
                                 }
                               },
                             ),
@@ -108,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             debugPrint('Sign Up');
-                            Get.offAll(() => const SignupScreen());
+                            Get.offAllNamed('/signup');
                           },
                           child: Text(
                             'Register',

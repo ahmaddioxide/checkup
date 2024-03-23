@@ -42,5 +42,14 @@ String? isPhoneNumber(String? value) {
 }
 
 
-//cnfirm password
+//confirm password
+String? confirmPassword(String? value, String password) {
+  if (value!.isEmpty) {
+    return 'Confirm password is required';
+  }
+  if (value != password) {
+    return 'Passwords do not match';
+  }
+  return null;
+}
 

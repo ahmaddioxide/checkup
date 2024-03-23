@@ -46,6 +46,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
         if (items[selectedTab].navKey.currentState?.canPop() ?? false) {
